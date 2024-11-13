@@ -226,3 +226,80 @@ menu()
 
 
 #pr2
+class Node:#через двозвязний список
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            return
+        last = self.head
+        while last.next:
+            last = last.next
+        last.next = new_node
+        new_node.prev = last
+
+    def delete(self, del_data):#послідовніть видалення
+        current = self.head
+        while current:
+            if current.data == del_data:
+                if current.prev:
+                    current.prev.next = current.next
+                if current.next:
+                    current.next.prev = current.prev
+                if current == self.head:
+                    self.head = current.next
+                print(f"Елемент '{del_data}' видалено.")
+                return
+            current = current.next
+        print(f"Елемент '{del_data}' не знайдено.")
+
+    def display(self):
+        current = self.head
+        elements = []
+        while current:
+            elements.append(current.data)
+            current = current.next
+        print("Список:", " <-> ".join(elements) if elements else "список порожній")
+
+def menu():
+    linked_list = DoublyLinkedList()
+
+    initial_data = input("Введіть рядки для списку через кому: ").split(',')
+    for item in initial_data:
+        linked_list.append(item.strip())
+
+    while True:
+        print("\nМеню:")
+        print("1. Додати елемент у список")
+        print("2. Видалити елемент зі списку")
+        print("3. Показати вміст списку")
+        print("4. Вийти")
+
+        choice = input("Ваш вибір: ")
+
+        if choice == '1':
+            data = input("Введіть рядок для додавання: ")
+            linked_list.append(data)
+            print(f"Додано значення '{data}'.")
+        elif choice == '2':
+            data = input("Введіть рядок для видалення: ")
+            linked_list.delete(data)
+        elif choice == '3':
+            linked_list.display()
+        elif choice == '4':
+            print("Вихід з програми.")
+            break
+        else:
+            print("Невірний вибір. Спробуйте ще раз.")
+
+
+menu()
