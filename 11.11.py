@@ -128,7 +128,7 @@ class LinkList:
         self.head = None
 
 
-    def append(self,data):#
+    def append(self,data):
         new_node = Node(data)
         if not self.head:
             self.head = new_node
@@ -154,10 +154,10 @@ class LinkList:
 
     def display(self):
         current = self.head
-        elements =[]
+        elements = []
         while current:
             elements.append(current.data)
-            current =current.next
+            current = current.next
             print("Список:", "->".join(map(str,elements))if elements else "спимок прожній")
 
     def find(self, data):
@@ -185,9 +185,10 @@ def menu():
     linked_list = LinkList()
 
 
-    initial_data = input("Введіть числа списку: ").split()
-    for num in initial_data:
+    initial_data = input("Введіть числа списку: ")
+    for num in initial_data.split():
         linked_list.append(int(num))
+
 
     while True:
         print("\nМеню:")
@@ -202,7 +203,7 @@ def menu():
 
         if choice == '1':
             data = int(input("Введіть значення для додавання: "))
-            linked_list.append()
+            linked_list.append(data)
             print(f"Додано значення {data}.")
         elif choice == '2':
             data = int(input("Введіть значення для видалення: "))
