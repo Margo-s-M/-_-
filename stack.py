@@ -430,3 +430,96 @@ def main_menu():
 
 if __name__ == "__main__":
     main_menu()
+
+
+#dz2
+# поміщення рядка
+# виштовхування рядка
+# підрахунок кількості
+# перевірку чи порожній
+# перевірку чи повний
+# очищення
+# отримання значення без виштовхування верхнього рядка
+
+
+from collections import deque
+
+class StringStack:
+    def __init__(self, max_size):
+        self.max_size = max_size
+        self.items = deque()
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def is_full(self):
+        return len(self.items) == self.max_size
+
+    def push(self, item):
+        if self.is_full():
+            return "Error: The stack is full."
+        self.items.append(item)
+        return f'Added "{item}" to the stack.'
+
+    def pop(self):
+        if self.is_empty():
+            return "Error: The stack is empty."
+        return f'Removed "{self.items.pop()}" from the stack.'
+
+    def peek(self):
+        if self.is_empty():
+            return "The stack is empty."
+        return f'Top element: "{self.items[-1]}"'
+
+    def clear(self):
+        self.items.clear()
+        return "The stack has been cleared."
+
+    def count(self):
+        return f'Number of elements in the stack: {len(self.items)}'
+
+    def display(self):
+        if self.is_empty():
+            return "The stack is empty."
+        return "Stack contents (top to bottom): " + ", ".join(reversed(self.items))
+
+
+def display_menu():
+    print("\nОберіть операцію:")
+    print("1. Додати рядок до стека")
+    print("2. Видалити рядок зі стека")
+    print("3. Переглянути верхній елемент")
+    print("4. Перевірити кількість рядків")
+    print("5. Перевірити чи порожній стек")
+    print("6. Перевірити чи повний стек")
+    print("7. Очистити стек")
+    print("8. Вийти")
+
+
+stack_size = 5  # Фіксований розмір стека
+stack = StringStack(stack_size)
+
+while True:
+    display_menu()
+    choice = input("Ваш вибір: ")
+
+    if choice == "1":
+        item = input("Введіть рядок для додавання: ")
+        print(stack.push(item))
+    elif choice == "2":
+        print(stack.pop())
+    elif choice == "3":
+        print(stack.peek())
+    elif choice == "4":
+        print(stack.count())
+    elif choice == "5":
+        print("Стек порожній." if stack.is_empty() else "Стек не порожній.")
+    elif choice == "6":
+        print("Стек повний." if stack.is_full() else "Стек не повний.")
+    elif choice == "7":
+        print(stack.clear())
+    elif choice == "8":
+        print("Вихід з програми.")
+        break
+    else:
+        print("Неправильний вибір, спробуйте ще раз.")
