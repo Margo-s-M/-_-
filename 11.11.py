@@ -303,3 +303,83 @@ def menu():
 
 
 menu()
+
+#dz
+def menu():
+    # Init. the list
+    numbers = list(map(int, input("Enter numbers : ").split()))
+
+    while True:
+        print("\nMenu:")
+        print("1. Add a new number:")
+        print("2. Remove all occurrences of a number from the list:")
+        print("3. Show the list content:")
+        print("4. Check if the number exists in the list:")
+        print("5. Replace a value in the list:")
+        print("6. Exit:")
+
+        choice = input("Your choice: ")
+
+        if choice == '1':
+            num = int(input("Enter a number to add: "))
+            if num in numbers:
+                print(f"The number {num} already exists in the list.")
+            else:
+                numbers.append(num)
+                print(f"The number {num} was added")
+
+        elif choice == '2':
+            num = int(input("Enter a number to remove: "))
+            count = numbers.count(num)
+            if count > 0:
+                numbers = [x for x in numbers if x != num]
+                print(f"The number {num} was removed {count} times from the list.")
+            else:
+                print(f"The number {num} was not found ")
+
+        elif choice == '3':
+            direction = input("Enter '1' to display from the beginning or '2' to display from the end: ")
+            if direction == '1':
+                print("List from the beginning:", numbers)
+            elif direction == '2':
+                print("List from the end:", numbers[::-1])
+            else:
+                print("Invalid choice!")
+
+        elif choice == '4':
+            num = int(input("Enter a number to check: "))
+            if num in numbers:
+                print(f"The number {num} exists in the list.")
+            else:
+                print(f"The number {num} does not exist ")
+
+        elif choice == '5':
+            old_value = int(input("Enter the value to replace: "))
+            new_value = int(input("Enter the new value: "))
+            option = input("Enter '1' to replace the first occurrence or '2' to replace all occurrences: ")
+
+            if option == '1':
+                if old_value in numbers:
+                    index = numbers.index(old_value)
+                    numbers[index] = new_value
+                    print(f"The first occurrence of {old_value} was replaced with {new_value}.")
+                else:
+                    print(f"The number {old_value} was not found in the list.")
+            elif option == '2':
+                count = numbers.count(old_value)
+                if count > 0:
+                    numbers = [new_value if x == old_value else x for x in numbers]
+                    print(f"All {count} occurrences of {old_value} were replaced with {new_value}.")
+                else:
+                    print(f"The number {old_value} was not found in the list.")
+            else:
+                print("Invalid choice!")
+
+        elif choice == '6':
+            print("Exiting the program.")
+            break
+
+        else:
+            print("Invalid choice, please try again.")
+
+menu()
