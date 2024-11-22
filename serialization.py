@@ -1,63 +1,63 @@
 import pickle
-# data = [1,2,3,4]
-# try:
-#     with open('list.pkl','wb') as file:
-#         pickle.dump(data,file)
-# except pickle.PickleError as e:
-#     print(f"Error{e}")
-# try:
-#     with open('list.pkl','rb') as file:
-#         load_data = pickle.load(file)
-# except pickle.UnpicklingError as e:
-#     print(f"Error{e}")
-#
-# print(load_data,type(load_data))
-#
-# ser_data = pickle.dumps(data)
-# print(ser_data)
-# load_d = pickle.loads(ser_data)
-# print(load_d)
-#
-#
-#
-# class CustomClass:
-#     def __init__(self,value):
-#         self.value = value
-#
-#     def __reduce__(self):
-#         return (self.__class__,(self.value))
-#
-#     def __str__(self):
-#         return f"value = {self.value}"
-#
-# # obj = CustomClass(67)
-# # ser = pickle.dumps(obj)
-# # print(f"Ser:{ser}")
-# # dser = pickle.loads(ser)
-# # print(f"Dser:{dser}")
-#
-#
-# class CustomClass2:
-#     def __init__(self,value):
-#         self.value = value
-#         self.note = "my note"
-#
-#     def __getstate__(self):
-#         state = self.__dict__.copy()
-#         del state["note"]
-#         return state
-#     def __setstate__(self, state):
-#         self.__dict__.update(state)
-#         self.note = "new note"
-#
-#     def __str__(self):
-#         return f"value ={self.value} , note ={self.note}"
-# # obj = CustomClass2
-# # print(obj)
-# # ser2 = pickle.dumps(obj)
-# # print(ser2)
-# # deser2 = pickle.loads(ser2)
-# # print(deser2)
+data = [1,2,3,4]
+try:
+    with open('list.pkl','wb') as file:
+        pickle.dump(data,file)
+except pickle.PickleError as e:
+    print(f"Error{e}")
+try:
+    with open('list.pkl','rb') as file:
+        load_data = pickle.load(file)
+except pickle.UnpicklingError as e:
+    print(f"Error{e}")
+
+print(load_data,type(load_data))
+
+ser_data = pickle.dumps(data)
+print(ser_data)
+load_d = pickle.loads(ser_data)
+print(load_d)
+
+
+
+class CustomClass:
+    def __init__(self,value):
+        self.value = value
+
+    def __reduce__(self):
+        return (self.__class__,(self.value))
+
+    def __str__(self):
+        return f"value = {self.value}"
+
+obj = CustomClass(67)
+ser = pickle.dump(obj)
+print(f"Ser:{ser}")
+dser = pickle.load(ser)
+print(f"Dser:{dser}")
+
+
+class CustomClass2:
+    def __init__(self,value):
+        self.value = value
+        self.note = "my note"
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state["note"]
+        return state
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        self.note = "new note"
+
+    def __str__(self):
+        return f"value ={self.value} , note ={self.note}"
+obj = CustomClass2
+print(obj)
+ser2 = pickle.dump(obj)
+print(ser2)
+deser2 = pickle.load(ser2)
+print(deser2)
 
 class Cache:
     def __init__(self):
@@ -144,3 +144,45 @@ user_d.load_file("output.pkl")
 
 #pr2
 
+class UserSession:
+    def __init__(self, username, token, data):
+        self.username = username
+        self.token = token
+        self.data = data
+
+    def __getstate__(self):
+
+        state = self.__dict__.copy()
+        if "token" in state:
+            del state["token"]
+        return state
+
+    def __setstate__(self, state):
+         self.__dict__.update(state)
+         self.token = None
+
+
+session = UserSession("Bob", "token_333", {"last_login": "2024-11-22"})
+
+serialized_session = pickle.dump(session)
+print("Серіалізований об'єкт:", serialized_session)
+
+deserialized_session = pickle.load(serialized_session)
+print("Відновлений об'єкт:")
+print("Ім'я користувача:", deserialized_session.username)
+print("Дані:", deserialized_session.data)
+print("Токен:", deserialized_session.token)
+
+#pr
+class DatabaseConnection:
+    def __init__(self, db_name, host, user, password):
+        self.db_name = db_name
+        self.host = host
+        self.user = user
+        self.password = password
+
+    def __getstate__(self):
+        pass
+
+    def __setstate__(self, state):
+        pass
