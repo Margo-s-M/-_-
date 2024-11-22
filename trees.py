@@ -79,7 +79,7 @@ if result:
 root = delete(root,56)
 inorder(root)
 
-pr 1
+#pr 1
 class EmployeeNode:
     def __init__(self, name, position):
         self.name = name
@@ -107,4 +107,139 @@ em_tree =EmployeeNode("Chack","CFO")
 em_tree =EmployeeNode("Ana","Enginner")
 em_tree = EmployeeNode("Borys", "Accountant")
 print_h(em_tree)
+
+
+#pr2
+
+class BookNode:
+    def __init__(self, title, genre):
+        self.title = title
+        self.genre = genre
+        self.left = None
+        self.right = None
+
+
+class BookRoot:
+    def __init__(self):
+        self.root = None  # Корінь
+
+    def add_book(self, title, genre):
+        if not self.root:
+            self.root = BookNode(title, genre)
+        else:
+            self._add_book(self.root, title, genre)
+
+    def _add_book(self, node, title, genre):
+        if title < node.title:
+            if node.left:
+                self._add_book(node.left, title, genre)
+            else:
+                node.left = BookNode(title, genre)
+        elif title > node.title:
+            if node.right:
+                self._add_book(node.right, title, genre)
+            else:
+                node.right = BookNode(title, genre)
+
+    def search_by_title(self, title):
+        return self._search_by_title(self.root, title)
+
+    def _search_by_title(self, node, title):
+        if not node:
+            return "Книга не знайдена."
+        if title == node.title:
+            return f"Книга: {node.title}, Жанр: {node.genre}"
+        elif title < node.title:
+            return self._search_by_title(node.left, title)
+        else:
+            return self._search_by_title(node.right, title)
+
+    def search_by_genre(self, genre):
+        result = []
+        self._search_by_genre(self.root, genre, result)
+        return result if result else "Книги цього жанру не знайдено."
+
+    def _search_by_genre(self, node, genre, result):
+        if node:
+            if node.genre == genre:
+                result.append(node.title)
+            self._search_by_genre(node.left, genre, result)
+            self._search_by_genre(node.right, genre, result)
+
+
+
+system = BookRoot()
+system.add_book("Япізнаю світ.Інтелект України ", "Мама це не на довго")
+system.add_book("Українська мова та література", "Школа лише 11 років")
+system.add_book("Математика", "Мам ти ще жива")
+
+print(system.search_by_title("Математика"))
+
+
+print("Ти все можеш:", system.search_by_genre("Мам ти ще жива"))
+
+#pr3
+
+class FileNode:
+    def __init__(self, name, size):
+        self.name = name
+        self.size = size
+        self.left = None
+        self.right = None
+
+
+class FileManager:
+    def __init__(self):
+        self.root = None
+
+    def add_file(self, name, size):
+        if not self.root:
+            self.root = FileNode(name, size)
+        else:
+            self._add_file(self.root, name, size)
+
+    def _add_file(self, node, name, size):
+        if name < node.name:
+            if node.left:
+                self._add_file(node.left, name, size)
+            else:
+                node.left = FileNode(name, size)
+        elif name > node.name:
+            if node.right:
+                self._add_file(node.right, name, size)
+            else:
+                node.right = FileNode(name, size)
+    def search_file(self, name):
+        return self._search_file(self.root, name)
+
+    def _search_file(self, node, name):
+        if not node:
+            return "Файл не знайдено."
+        if name == node.name:
+            return f"Файл: {node.name}, Розмір: {node.size} байт"
+        elif name < node.name:
+            return self._search_file(node.left, name)
+        else:
+            return self._search_file(node.right, name)
+    def list_files(self):
+        files = []
+        self._inorder(self.root, files)
+        return files
+
+    def _inorder(self, node, files):
+        if node:
+            self._inorder(node.left, files)
+            files.append((node.name, node.size))
+            self._inorder(node.right, files)
+
+
+manager = FileManager()
+manager.add_file("file1.txt", 500)
+manager.add_file("file2.txt", 1500)
+manager.add_file("image.png", 300)
+
+
+print(manager.search_file("file2.txt"))
+
+print("Список файлів:", manager.list_files())
 
