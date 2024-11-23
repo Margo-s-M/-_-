@@ -59,6 +59,8 @@ print(ser2)
 deser2 = pickle.load(ser2)
 print(deser2)
 
+
+#збереження стану кешу
 class Cache:
     def __init__(self):
         self.cache_data ={}
@@ -186,3 +188,45 @@ class DatabaseConnection:
 
     def __setstate__(self, state):
         pass
+
+
+
+
+
+music_library = {}
+
+
+def add_band(band, albums):
+    music_library[band] = albums
+    print(f"Додано: {band} -> {albums}")
+
+
+def remove_band(band):
+    if band in music_library:
+        del music_library[band]
+        print(f"Видалено: {band}")
+    else:
+        print(f"Виконавець '{band}' не знайдений.")
+
+
+def search_band(band):
+    if band in music_library:
+        print(f"Альбоми {band}: {music_library[band]}")
+    else:
+        print(f"Виконавець '{band}' не знайдений.")
+
+def edit_band(band, new_albums):
+    if band in music_library:
+        music_library[band] = new_albums
+        print(f"Альбоми {band} оновлено на: {new_albums}")
+    else:
+        print(f"Виконавець '{band}' не знайдений.")
+
+#збереження
+def save_library(filename):
+    pass
+
+# завантаження
+def load_library(filename):
+    pass
+
