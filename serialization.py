@@ -230,3 +230,55 @@ def save_library(filename):
 def load_library(filename):
     pass
 
+#PR
+
+class TaskQueue:
+    def __init__(self):
+        self.tasks = []  # Черга завдань
+        self.completed = []  # Список завершених завдань
+
+    def add_task(self, task):
+        self.tasks.append(task)
+        print(f"Завдання '{task}' додано до черги.")
+
+    def complete_task(self, task):
+        if task in self.tasks:
+            self.tasks.remove(task)
+            self.completed.append(task)
+            print(f"Завдання '{task}' позначено як завершене.")
+        else:
+            print(f"Завдання '{task}' не знайдено в черзі.")
+
+    def show_tasks(self):
+        if not self.tasks:
+            print("Черга завдань порожня.")
+        else:
+            print("Незавершені завдання:")
+            for task in self.tasks:
+                print(f"- {task}")
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state['completed'] = []  # Не серіалізуємо завершені завдання
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__ = state
+        print("Стан черги завдань відновлено.")
+
+queue = TaskQueue()
+queue.add_task("Task 1")
+queue.add_task("Task 2")
+queue.add_task("Task 3")
+
+queue.complete_task("Task 2")
+
+queue.show_tasks()
+
+
+serialized_queue = pickle.dumps(queue)
+print("\nЧерга завдань серіалізована.")
+
+deserialized_queue = pickle.loads(serialized_queue)
+print("\nЧерга завдань десеріалізована:")
+deserialized_queue.show_tasks()
