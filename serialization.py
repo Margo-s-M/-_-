@@ -216,12 +216,10 @@ print("After deserialization:", deserialized_conn.get_connection_info())
 
 
 
-
+#dz
 
 
 music_library = {}
-
-
 def add_band(band, albums):
     music_library[band] = albums
     print(f"Додано: {band} -> {albums}")
@@ -248,13 +246,100 @@ def edit_band(band, new_albums):
     else:
         print(f"Виконавець '{band}' не знайдений.")
 
-#збереження
 def save_library(filename):
     pass
 
-# завантаження
 def load_library(filename):
     pass
+
+
+
+
+#dz
+import pickle
+
+class CountryCapitalManager:
+    def __init__(self):
+        self.data = {}# Словник
+
+    def add_entry(self, country, capital):
+        self.data[country] = capital
+        print(f"Додано: {country} - {capital}")
+
+    def delete_entry(self, country):
+        if country in self.data:
+            del self.data[country]
+            print(f"Країну {country} видалено.")
+        else:
+            print(f"Країну {country} не знайдено.")
+
+    def search_entry(self, country):
+        if country in self.data:
+            return f"Столиця {country}: {self.data[country]}"
+        else:
+            return f"Країну {country} не знайдено."
+
+    def edit_entry(self, country, new_capital):
+        if country in self.data:
+            self.data[country] = new_capital
+            print(f"Столицю {country} змінено на {new_capital}.")
+        else:
+            print(f"Країну {country} не знайдено.")
+
+    def save_to_file(self, filename):
+
+        with open(filename, 'wb') as file:
+            pickle.dump(self.data, file)
+        print(f"Дані збережено у файл {filename}.")
+
+    def load_from_file(self, filename):
+
+        try:
+            with open(filename, 'rb') as file:
+                self.data = pickle.load(file)
+            print(f"Дані завантажено з файлу {filename}.")
+        except FileNotFoundError:
+            print(f"Файл {filename} не знайдено.")
+
+    def display_all(self):
+
+        if not self.data:
+            print("Словник порожній.")
+        else:
+            for country, capital in self.data.items():
+                print(f"{country}: {capital}")
+
+
+
+manager = CountryCapitalManager()
+
+
+manager.add_entry("Ukraine", "Kyiv")
+manager.add_entry("France", "Paris")
+manager.add_entry("Germany", "Berlin")
+
+
+print("\nПоточний словник:")
+manager.display_all()
+
+
+print("\nПошук:")
+print(manager.search_entry("France"))
+
+
+manager.edit_entry("Germany", "Munich")
+
+
+manager.delete_entry("France")
+
+
+manager.save_to_file("countries.pkl")
+
+
+print("\nЗавантаження даних з файлу:")
+new_manager = CountryCapitalManager()
+new_manager.load_from_file("countries.pkl")
+new_manager.display_all()
 
 #PR
 
