@@ -176,18 +176,44 @@ print("Дані:", deserialized_session.data)
 print("Токен:", deserialized_session.token)
 
 #pr
+import pickle
+
 class DatabaseConnection:
     def __init__(self, db_name, host, user, password):
         self.db_name = db_name
         self.host = host
         self.user = user
         self.password = password
+        self.connection = self._connect_to_db()
+
+    def _connect_to_db(self):
+        return f"Connected to {self.db_name} on {self.host} as {self.user}"
 
     def __getstate__(self):
-        pass
+        state = self.__dict__.copy()
+        state['connection'] = None
+            return state
 
     def __setstate__(self, state):
-        pass
+        self.__dict__ = state
+        self.connection = self._connect_to_db()
+
+    def get_connection_info(self):
+        return self.connection
+
+
+
+
+db_conn = DatabaseConnection("test_db", "localhost", "admin", "password123")
+print("Before serialization:", db_conn.get_connection_info())
+
+
+serialized_conn = pickle.dumps(db_conn)
+
+
+deserialized_conn = pickle.loads(serialized_conn)
+print("After deserialization:", deserialized_conn.get_connection_info())
+
 
 
 
