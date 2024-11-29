@@ -163,4 +163,20 @@ if __name__ == "__main__":
     main()
 
 
+#pr4
 
+
+# def search_word(file_path,word):
+#     try:
+#         with open(file_path, "r",encoding="utf8") as file:
+#             content = file.readlines()
+#
+#
+#         found_lines = []
+#         for line_number , line in enumerate(content,start=1):
+#             if word in line:
+#                 found_lines.append(f"{line_number} :{line.strip()}")
+#
+#         if found_lines:
+#             print(f"The word{word} was found")
+#
