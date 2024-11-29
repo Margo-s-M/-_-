@@ -133,7 +133,6 @@
 
 import threading
 
-
 def find_max(numbers):
     maximum = max(numbers)
     print("Maximum:", maximum)
@@ -166,20 +165,44 @@ if __name__ == "__main__":
 #pr4
 
 
-# def search_word(file_path,word):
-#     try:
-#         with open(file_path, "r",encoding="utf8") as file:
-#             content = file.readlines()
-#
-#
-#         found_lines = []
-#         for line_number , line in enumerate(content,start=1):
-#             if word in line:
-#                 found_lines.append(f"{line_number} :{line.strip()}")
-#
-#         if found_lines:
-#             print(f"The word{word} was found")
-#
+def search_word(file_path,word,start,end,result):
+    try:
+        with open(file_path, "r",encoding="utf8") as file:
+            file.seek(start)
+            content = file.read(end-start)
+            if word in content:
+                result.append(True)
+    except Exception as e:
+        print(f"Error in file reading{e}")
+
+def main():
+    file_path =input("Enter the file path")
+    word = input("Enter a word search for")
+    with open(file_path,"r", encoding="utf8")as file:
+        file.seek(0,2)
+        file_size = file.tell()
+    mid_point = file_size//2
+    result = []
+
+    search_thread1 = threading.Thread(target=search_word,
+                                      args=(file_path,word,0,mid_point,result))
+    search_thread2 = threading.Thread(target=search_word,
+                                      args=(file_path, word, mid_point, file_size,result))
+
+    search_thread1.start()
+    search_thread1.join()
+    search_thread2.start()
+    search_thread2.join()
+    if any(result):
+        print("Word is finde")
+
+    print("Search completed")
+
+main()
+
+
+
+
 
 #dz
 
@@ -187,20 +210,17 @@ import threading
 import random
 
 def fill_list(numbers, event):
-    """Заповнює список випадковими числами."""
     for _ in range(10):
         numbers.append(random.randint(1, 100))
     print(f"Список заповнено: {numbers}")
-    event.set()  # Сигнал для інших потоків
+    event.set()
 
 def calculate_sum(numbers, event):
-    """Обчислює суму елементів списку."""
     event.wait()
     total = sum(numbers)
     print(f"Сума елементів списку: {total}")
 
 def calculate_average(numbers, event):
-    """Обчислює середнє арифметичне списку."""
     event.wait()
     average = sum(numbers) / len(numbers) if numbers else 0
     print(f"Середнє арифметичне: {average:.2f}")
@@ -229,7 +249,6 @@ import random
 import math
 
 def fill_file(filename, event):
-    """Заповнює файл випадковими числами."""
     with open(filename, "w") as file:
         for _ in range(10):
             file.write(f"{random.randint(1, 20)}\n")
@@ -237,7 +256,6 @@ def fill_file(filename, event):
     event.set()
 
 def find_primes(filename, output_file, event):
-    """Знаходить усі прості числа."""
     event.wait()
     def is_prime(n):
         if n < 2:
@@ -255,11 +273,8 @@ def find_primes(filename, output_file, event):
             file.write(f"{prime}\n")
     print(f"Простые числа записаны в файл {output_file}.")
 
-
-# Создаём событие для синхронизации потоков
 event = threading.Event()
 
-# Указываем имена файлов
 input_file = "numbers.txt"
 output_file = "primes.txt"
 
