@@ -180,3 +180,97 @@ if __name__ == "__main__":
 #         if found_lines:
 #             print(f"The word{word} was found")
 #
+
+#dz
+
+import threading
+import random
+
+def fill_list(numbers, event):
+    """Заповнює список випадковими числами."""
+    for _ in range(10):
+        numbers.append(random.randint(1, 100))
+    print(f"Список заповнено: {numbers}")
+    event.set()  # Сигнал для інших потоків
+
+def calculate_sum(numbers, event):
+    """Обчислює суму елементів списку."""
+    event.wait()
+    total = sum(numbers)
+    print(f"Сума елементів списку: {total}")
+
+def calculate_average(numbers, event):
+    """Обчислює середнє арифметичне списку."""
+    event.wait()
+    average = sum(numbers) / len(numbers) if numbers else 0
+    print(f"Середнє арифметичне: {average:.2f}")
+
+if __name__ == "__main__":
+    numbers = []
+    event = threading.Event()
+
+    fill_thread = threading.Thread(target=fill_list, args=(numbers, event))
+    sum_thread = threading.Thread(target=calculate_sum, args=(numbers, event))
+    avg_thread = threading.Thread(target=calculate_average, args=(numbers, event))
+
+    fill_thread.start()
+    sum_thread.start()
+    avg_thread.start()
+
+    fill_thread.join()
+    sum_thread.join()
+    avg_thread.join()
+    print("Обчислення завершено.")
+
+
+
+import threading
+import random
+import math
+
+def fill_file(filename, event):
+    """Заповнює файл випадковими числами."""
+    with open(filename, "w") as file:
+        for _ in range(10):
+            file.write(f"{random.randint(1, 20)}\n")
+    print(f"Файл {filename} заповнено.")
+    event.set()
+
+def find_primes(filename, output_file, event):
+    """Знаходить усі прості числа."""
+    event.wait()
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(math.sqrt(n)) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    with open(filename, "r") as file:
+        numbers = list(map(int, file.readlines()))
+    primes = [n for n in numbers if is_prime(n)]
+    with open(output_file, "w") as file:
+        for prime in primes:
+            file.write(f"{prime}\n")
+    print(f"Простые числа записаны в файл {output_file}.")
+
+
+# Создаём событие для синхронизации потоков
+event = threading.Event()
+
+# Указываем имена файлов
+input_file = "numbers.txt"
+output_file = "primes.txt"
+
+# Создаём и запускаем потоки
+thread1 = threading.Thread(target=fill_file, args=(input_file, event))
+thread2 = threading.Thread(target=find_primes, args=(input_file, output_file, event))
+
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+
+print("Программа завершена.")
