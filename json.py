@@ -245,3 +245,156 @@ print(loaded_clock_json.display_time())
 
 #pickleдля бінарної серфалізації/дес-ї, робота за складними обєктами
 #json для текстової сер-ї , обмін данними між різними системами.
+
+#dz
+import json
+import pickle
+
+class Car:
+    def __init__(self, brand, model, year, price):
+        self.brand = brand
+        self.model = model
+        self.year = year
+        self.price = price
+
+    def display_info(self):
+        return f"{self.brand} {self.model} ({self.year}) - ${self.price}"
+
+    def save_to_pickle(self, filename):
+        with open(filename, 'wb') as file:
+            pickle.dump(self.__dict__, file)
+        print(f"Дані автомобіля збережено у файл {filename} (pickle).")
+
+    @staticmethod
+    def load_from_pickle(filename):
+        with open(filename, 'rb') as file:
+            data = pickle.load(file)
+        print(f"Дані автомобіля завантажено з файлу {filename} (pickle).")
+        return Car(**data)
+
+    def save_to_json(self, filename):
+        with open(filename, 'w') as file:
+            json.dump(self.__dict__, file)
+        print(f"Дані автомобіля збережено у файл {filename} (json).")
+
+    @staticmethod
+    def load_from_json(filename):
+        with open(filename, 'r') as file:
+            data = json.load(file)
+        print(f"Дані автомобіля завантажено з файлу {filename} (json).")
+        return Car(**data)
+
+
+car = Car("Tesla", "Model S", 2022, 79999)
+print(car.display_info())
+
+
+car.save_to_pickle("car.pkl")
+car.save_to_json("car.json")
+
+
+car_from_pickle = Car.load_from_pickle("car.pkl")
+car_from_json = Car.load_from_json("car.json")
+print(car_from_pickle.display_info())
+print(car_from_json.display_info())
+
+
+class Stadium:
+    def __init__(self, name, location, capacity, year_built):
+        self.name = name
+        self.location = location
+        self.capacity = capacity
+        self.year_built = year_built
+
+    def display_info(self):
+        return f"{self.name} ({self.year_built}), {self.location} - Capacity: {self.capacity}"
+
+    def save_to_pickle(self, filename):
+        with open(filename, 'wb') as file:
+            pickle.dump(self.__dict__, file)
+        print(f"Дані стадіону збережено у файл {filename} (pickle).")
+
+    @staticmethod
+    def load_from_pickle(filename):
+        with open(filename, 'rb') as file:
+            data = pickle.load(file)
+        print(f"Дані стадіону завантажено з файлу {filename} (pickle).")
+        return Stadium(**data)
+
+    def save_to_json(self, filename):
+        with open(filename, 'w') as file:
+            json.dump(self.__dict__, file)
+        print(f"Дані стадіону збережено у файл {filename} (json).")
+
+    @staticmethod
+    def load_from_json(filename):
+        with open(filename, 'r') as file:
+            data = json.load(file)
+        print(f"Дані стадіону завантажено з файлу {filename} (json).")
+        return Stadium(**data)
+
+
+stadium = Stadium("Camp Nou", "Barcelona, Spain", 99354, 1957)
+print(stadium.display_info())
+
+
+stadium.save_to_pickle("stadium.pkl")
+stadium.save_to_json("stadium.json")
+
+
+stadium_from_pickle = Stadium.load_from_pickle("stadium.pkl")
+stadium_from_json = Stadium.load_from_json("stadium.json")
+print(stadium_from_pickle.display_info())
+print(stadium_from_json.display_info())
+
+
+
+
+class Book:
+    def __init__(self, title, author, pages, price):
+        self.title = title
+        self.author = author
+        self.pages = pages
+        self.price = price
+
+    def display_info(self):
+        return f"'{self.title}' by {self.author}, {self.pages} pages - ${self.price}"
+
+    def save_to_pickle(self, filename):
+        with open(filename, 'wb') as file:
+            pickle.dump(self.__dict__, file)
+        print(f"Дані книги збережено у файл {filename} (pickle).")
+
+    @staticmethod
+    def load_from_pickle(filename):
+        with open(filename, 'rb') as file:
+            data = pickle.load(file)
+        print(f"Дані книги завантажено з файлу {filename} (pickle).")
+        return Book(**data)
+
+    def save_to_json(self, filename):
+        with open(filename, 'w') as file:
+            json.dump(self.__dict__, file)
+        print(f"Дані книги збережено у файл {filename} (json).")
+
+    @staticmethod
+    def load_from_json(filename):
+        with open(filename, 'r') as file:
+            data = json.load(file)
+        print(f"Дані книги завантажено з файлу {filename} (json).")
+        return Book(**data)
+
+
+book = Book("Python Programming", "John Doe", 350, 29.99)
+print(book.display_info())
+
+
+book.save_to_pickle("book.pkl")
+book.save_to_json("book.json")
+
+
+book_from_pickle = Book.load_from_pickle("book.pkl")
+book_from_json = Book.load_from_json("book.json")
+print(book_from_pickle.display_info())
+print(book_from_json.display_info())
+
