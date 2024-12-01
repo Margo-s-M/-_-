@@ -1,138 +1,138 @@
-# import json
-#
-# data = {"c":3,"b":6,"a":2,(3,6):6,6:8, None:90}
-# #js_str = json.dumps(data,indent=4,sort_keys=True)
-# js_str = json.dumps(data, indent =4,skipkeys=True)
-# print(js_str)
-#
-# client ={
-#     "name": "VVV",
-#     "age": "56",
-#     "courser": ["History","Python"],
-#     "adress": {"city":"Bro",
-#                "code":"07404"
-#                }
-#
-# }
-# try:
-#     with open("data.json", "w", encoding="utf-8") as file:
-#         json.dump(client,file,indent=4,ensure_ascii=False)
-#     print("Data is saved")
-#     with open("data.json","r", encoding="utf-8") as file:
-#         client = json.load(file)
-#     print("Дані десерелізовано", data)
-# except IOError:
-#     print("File error")
-# except json.JSONDecodeEror:
-#     print("помилка декодування")
+import json
 
-# import json
-# from  datetime import datetime
-# class CustonEncoder(json.JSONEncoder):
-#
-#     def default(self,obj):
-#         if isinstance(obj,datetime):
-#             return obj.strftime("%B %d,%Y")
-#         return super().default(obj)
-# def custom_decoder(dct):
-#     for key, value in dct.items():
-#         try:
-#             dct[key]= datetime.strptime(value,"%B %d %Y")
-#         except (ValueError,TypeError):
-#             pass
-#     return dct
-# data = {
-#     "name" :"Alice",
-#     "data": datetime.now()
-# }
-# js_string = json.dumps(data, cls=CustonEncoder, indent =4)
-# print(js_string)
-# dec_data = json.load(js_string, object_hook=custom_decoder)
-# print(dec_data)
-#
-# class Author:
-#     def __init__(self, name):
-#         self.name = name
-#
-#     def __str__(self):
-#         return  f"{self.name}"
-#
-# class Publish:
-#     def __init__(self, name , country):
-#         self.name = name
-#         self.country = country
-#
-#     def __str__(self):
-#         return f"{self.name},{self.country}"
-#
-# class Book:
-#
-#     def __init__(self,title, author,publisher, year):
-#         self.title = title
-#         self.author = author
-#         self.publisher = publisher
-#         self.year = year
-#
-#     def __str__(self):
-#         return (f"done")
-#
-# class CustonEncoder(json.JSONEncoder):
-#
-#     def default(self, obj):
-#         if isinstance(obj,Author):
-#             return {"__Author__":True,"name":obj.name}
-#         elif isinstance(obj, Author):
-#             return {"__Pblish__":True, "name":obj.name,"country": obj.country}
-#         elif isinstance(obj,Book):
-#             return {
-#                 "__Book__": True,
-#                 "title":obj.title,
-#             "author":obj.author,
-#             "publisher":obj.publisher,
-#             "year":obj.year}
-#
-# def custoom_dec(dct):
-#     if"__Author__" in dct:
-#         return Author(name=dct["name"])
-#     elif"__Publish__"  in dct:
-#         return Publish(name=dct["name"],country=dct["country"])
-#     elif "__Publish__" in dct:
-#         return Publish(name=dct["name"],counry=dct["country"])
-#     elif "__Book__" in dct:
-#         return  Book(
-#             title=dct["title"],
-#             author=dct["author"],
-#             publisher=dct["publisher"],
-#             year=dct["year"]
-#
-#
-#         )
-#
-# library = [
-#     Book(title="BookTitle",
-#          author=Author(name="Harry"),
-#          publisher=Publish(name="Company",country="Ua"),
-#          year=1967),
-#     Book(title="BookTitle2",
-#          author=Author(name="Harry"),
-#          publisher=Publish(name="Company2", country="Ua"),
-#          year=1997
-#          )
-# ]
-#
-# with open("library.json", "a", encoding="utf-8")as file:
-#     json.dump(library, file,indent=4,ensure_ascii=False, cls=CustonEncoder)
-#
-# with open("Library.json", "r",encoding="utf-8") as file:
-#     load = json.load(file,object_hook=custoom_dec)
-# for book in load:
-#     print(book)
-#
+data = {"c":3,"b":6,"a":2,(3,6):6,6:8, None:90}
+#js_str = json.dumps(data,indent=4,sort_keys=True)
+js_str = json.dumps(data, indent =4,skipkeys=True)
+print(js_str)
+
+client ={
+    "name": "VVV",
+    "age": "56",
+    "courser": ["History","Python"],
+    "adress": {"city":"Bro",
+               "code":"07404"
+               }
+
+}
+try:
+    with open("data.json", "w", encoding="utf-8") as file:
+        json.dump(client,file,indent=4,ensure_ascii=False)
+    print("Data is saved")
+    with open("data.json","r", encoding="utf-8") as file:
+        client = json.load(file)
+    print("Дані десерелізовано", data)
+except IOError:
+    print("File error")
+except json.JSONDecodeEror:
+    print("помилка декодування")
+
+import json_zip
+from  datetime import datetime
+class CustonEncoder(json.JSONEncoder):
+
+    def default(self,obj):
+        if isinstance(obj,datetime):
+            return obj.strftime("%B %d,%Y")
+        return super().default(obj)
+def custom_decoder(dct):
+    for key, value in dct.items():
+        try:
+            dct[key]= datetime.strptime(value,"%B %d %Y")
+        except (ValueError,TypeError):
+            pass
+    return dct
+data = {
+    "name" :"Alice",
+    "data": datetime.now()
+}
+js_string = json.dumps(data, cls=CustonEncoder, indent =4)
+print(js_string)
+dec_data = json.load(js_string, object_hook=custom_decoder)
+print(dec_data)
+
+class Author:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return  f"{self.name}"
+
+class Publish:
+    def __init__(self, name , country):
+        self.name = name
+        self.country = country
+
+    def __str__(self):
+        return f"{self.name},{self.country}"
+
+class Book:
+
+    def __init__(self,title, author,publisher, year):
+        self.title = title
+        self.author = author
+        self.publisher = publisher
+        self.year = year
+
+    def __str__(self):
+        return (f"done")
+
+class CustonEncoder(json.JSONEncoder):
+
+    def default(self, obj):
+        if isinstance(obj,Author):
+            return {"__Author__":True,"name":obj.name}
+        elif isinstance(obj, Author):
+            return {"__Pblish__":True, "name":obj.name,"country": obj.country}
+        elif isinstance(obj,Book):
+            return {
+                "__Book__": True,
+                "title":obj.title,
+            "author":obj.author,
+            "publisher":obj.publisher,
+            "year":obj.year}
+
+def custoom_dec(dct):
+    if"__Author__" in dct:
+        return Author(name=dct["name"])
+    elif"__Publish__"  in dct:
+        return Publish(name=dct["name"],country=dct["country"])
+    elif "__Publish__" in dct:
+        return Publish(name=dct["name"],counry=dct["country"])
+    elif "__Book__" in dct:
+        return  Book(
+            title=dct["title"],
+            author=dct["author"],
+            publisher=dct["publisher"],
+            year=dct["year"]
+
+
+        )
+
+library = [
+    Book(title="BookTitle",
+         author=Author(name="Harry"),
+         publisher=Publish(name="Company",country="Ua"),
+         year=1967),
+    Book(title="BookTitle2",
+         author=Author(name="Harry"),
+         publisher=Publish(name="Company2", country="Ua"),
+         year=1997
+         )
+]
+
+with open("library.json", "a", encoding="utf-8")as file:
+    json.dump(library, file,indent=4,ensure_ascii=False, cls=CustonEncoder)
+
+with open("Library.json", "r",encoding="utf-8") as file:
+    load = json.load(file,object_hook=custoom_dec)
+for book in load:
+    print(book)
+
 
 #pr1
 
-import pickle
 
+import pickle
 class Airplane:
     def __init__(self, model, capacity, range_km, airline):
         self.model = model
@@ -171,18 +171,18 @@ print(loaded_airplane.display_info())
 
 
 
-import json
+import json_zip
 # Стиснення у JSON
 class AirplaneJSON(Airplane):
     def save_to_json(self, filename):
         with open(filename, 'w') as file:
-            json.dump(self.__dict__, file)
+            json_zip.dump(self.__dict__, file)
         print(f"Object saved to {filename} using JSON.")
 
     @staticmethod
     def load_from_json(filename):
         with open(filename, 'r') as file:
-            data = json.load(file)
+            data = json_zip.load(file)
         print(f"Object loaded from {filename} using JSON.")
         return AirplaneJSON(data['model'], data['capacity'], data['range_km'], data['airline'])
 
@@ -218,13 +218,13 @@ class Clock:
 
     def save_to_json(self, filename):
         with open(filename, 'w') as file:
-            json.dump(self.__dict__, file)
+            json_zip.dump(self.__dict__, file)
         print(f"Clock saved to {filename} using JSON.")
 
     @staticmethod
     def load_from_json(filename):
         with open(filename, 'r') as file:
-            data = json.load(file)
+            data = json_zip.load(file)
         print(f"Clock loaded from {filename} using JSON.")
         return Clock(data['hours'], data['minutes'], data['seconds'])
 
@@ -247,7 +247,7 @@ print(loaded_clock_json.display_time())
 #json для текстової сер-ї , обмін данними між різними системами.
 
 #dz
-import json
+import json_zip
 import pickle
 
 class Car:
